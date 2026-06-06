@@ -1,5 +1,4 @@
 import {
-  ConflictException,
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
@@ -16,10 +15,10 @@ export class AuthService {
   constructor(
     private usersService: UserService,
     private jwtService: JwtService,
-  ) {}
+  ) { }
 
   async login(body: UserLoginDto): Promise<any> {
-    const user = await this.usersService.findByEmail(body.email);
+    const user = await this.usersService.findByUsername(body.username);
     if (!user) {
       throw new UnauthorizedException();
     }
@@ -28,7 +27,7 @@ export class AuthService {
       throw new UnauthorizedException();
     }
 
-    const payload = { sub: user.id, email: user.email, rol: user.role  };
+    const payload = { sub: user.id, username: user.username, rol: user.role };
     return {
       token: await this.jwtService.signAsync(payload),
     };
@@ -37,7 +36,7 @@ export class AuthService {
 
   async register(body: UserRegisterDto): Promise<UserRegisterResponseDto> {
     const newUser = await this.usersService.create(body);
-    return { id: newUser.id, email: newUser.email, fullName: newUser.fullName, role: newUser.role } as UserRegisterResponseDto;
+    return { id: newUser.id, username: newUser.username, fullName: newUser.fullName, role: newUser.role } as UserRegisterResponseDto;
   }
 
 
@@ -49,9 +48,22 @@ export class AuthService {
     }
     return {
       id: user.id,
-      email: user.email,
+      username: user.username,
       fullName: user.fullName,
-      role: user.role
+      role: user.role,
+      saldoHoras: user.saldoHoras,
+      totalTutoriasRealizadas: user.totalTutoriasRealizadas,
+      promedioCalificacion: user.promedioCalificacion,
+      imagenPerfil: user.imagenPerfil,
+      telefono: user.telefono,
+      especialidades: (user.especialidades || []).map(e => ({
+        id: e.id,
+        detalleEspecialidad: e.detalleEspecialidad,
+      })),
+      materias: (user.materias || []).map(m => ({
+        id: m.id,
+        detalleMateria: m.detalleMateria,
+      })),
     } as UserInfoDto;
   }
 }

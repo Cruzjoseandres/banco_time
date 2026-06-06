@@ -8,64 +8,50 @@ const Header = () => {
     const token = getAccessToken();
     const userInfo = getUserInfo();
 
-    const onLogoutClick = () => {
-        doLogout();
-    };
-
     return (
         <Navbar bg="dark" variant="dark" expand="lg">
             <Container>
-                <Link className="navbar-brand" to="/">Sistema de Eventos</Link>
-                <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                <Navbar.Collapse id="basic-navbar-nav">
+                <Link className="navbar-brand" to="/">
+                    ⏱️ Banco de Tiempo
+                </Link>
+                <Navbar.Toggle aria-controls="nav-banco-tiempo" />
+                <Navbar.Collapse id="nav-banco-tiempo">
                     <Nav className="me-auto">
+                        {/* Sin sesión */}
                         {!token && (
                             <>
-                                <Link className="nav-link" to="/">Eventos</Link>
+                                <Link className="nav-link" to="/">Buscar Tutores</Link>
                                 <Link className="nav-link" to="/login">Iniciar sesión</Link>
                                 <Link className="nav-link" to="/register">Registrarse</Link>
                             </>
                         )}
 
+                        {/* Usuario autenticado */}
                         {token && userInfo?.role === 'user' && (
                             <>
-                                <Link className="nav-link" to="/">Eventos</Link>
-                                <Link className="nav-link" to="/participante/mis-inscripciones">Mis Inscripciones</Link>
-                            </>
-                        )}
-
-                        {token && userInfo?.role === 'organizador' && (
-                            <>
-                                <Link className="nav-link" to="/organizador/eventos">Mis Eventos</Link>
-                                <Link className="nav-link" to="/organizador/eventos/crear">Crear Evento</Link>
-                            </>
-                        )}
-
-                        {token && userInfo?.role === 'validator' && (
-                            <>
-                                <Link className="nav-link" to="/validador">Panel Validador</Link>
+                                <Link className="nav-link" to="/user/buscar-tutores">Buscar Tutores</Link>
+                                <Link className="nav-link" to="/user/mis-citas">Mis Citas</Link>
+                                <Link className="nav-link" to="/user/chats">Chats</Link>
+                                <Link className="nav-link" to="/user/mi-perfil">Mi Perfil</Link>
                             </>
                         )}
 
                         {token && userInfo?.role === 'admin' && (
                             <>
-                                <Link className="nav-link" to="/">Eventos</Link>
-                                <Link className="nav-link" to="/admin/usuarios">Gestión de Usuarios</Link>
+                                <Link className="nav-link" to="/admin/dashboard">Dashboard Admin</Link>
                             </>
                         )}
                     </Nav>
 
                     {token && (
                         <Nav>
-                            <NavDropdown title={userInfo?.fullName || "Usuario"} id="user-dropdown">
-                                <NavDropdown.Item disabled>
-                                    <small className="text-muted">Rol: {userInfo?.role}</small>
-                                </NavDropdown.Item>
-                                <NavDropdown.Divider />
-                                <button className="dropdown-item" onClick={onLogoutClick}>
-                                    Cerrar sesión
-                                </button>
-                            </NavDropdown>
+                            <button 
+                                className="nav-link border-0 bg-transparent text-start" 
+                                onClick={doLogout}
+                                style={{ cursor: 'pointer' }}
+                            >
+                                Cerrar sesión
+                            </button>
                         </Nav>
                     )}
                 </Navbar.Collapse>
@@ -75,4 +61,3 @@ const Header = () => {
 };
 
 export default Header;
-

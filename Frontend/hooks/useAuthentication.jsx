@@ -15,11 +15,7 @@ const useAuthentication = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   const validateLogin = () => {
-    const token = getAccessToken();
-    if (!token) {
-      return false;
-    }
-    return true;
+    return !!getAccessToken();
   };
 
   const fetchUserInfo = async () => {
@@ -40,25 +36,12 @@ const useAuthentication = () => {
       const response = await login(loginData);
       saveAccessToken(response.token);
 
-      // Obtener información del usuario
       const userData = await fetchUserInfo();
-
       if (userData) {
-        // Redirigir según el rol
-        switch (userData.role) {
-          case 'admin':
-            navigate("/admin");
-            break;
-          case 'organizador':
-            navigate("/organizador/eventos");
-            break;
-          case 'validador':
-            navigate("/validador");
-            break;
-          case 'user':
-          default:
-            navigate("/");
-            break;
+        if (userData.role === 'admin') {
+          navigate("/admin/dashboard");
+        } else {
+          navigate("/user/buscar-tutores");
         }
       }
       return true;
@@ -71,7 +54,7 @@ const useAuthentication = () => {
   const doLogout = () => {
     removeAccessToken();
     setUserInfo(null);
-    navigate("/");
+    navigate("/login");
   };
 
   useEffect(() => {
@@ -96,4 +79,3 @@ const useAuthentication = () => {
 };
 
 export default useAuthentication;
-

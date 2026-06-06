@@ -1,0 +1,204 @@
+.chat-cita-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 60px); /* restar navbar */
+    max-width: 680px;
+    margin: 0 auto;
+    background: white;
+}
+
+/* Header del chat */
+.chat-header {
+    background: linear-gradient(135deg, #4f46e5, #7c3aed);
+    color: white;
+    padding: 0.85rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-shrink: 0;
+}
+
+.chat-header-back {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    padding: 0.25rem;
+    display: flex;
+    align-items: center;
+    opacity: 0.8;
+}
+
+.chat-header-back:hover { opacity: 1; }
+
+.chat-header-avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1rem;
+    flex-shrink: 0;
+}
+
+.chat-header-info {
+    flex: 1;
+}
+
+.chat-header-nombre {
+    font-weight: 600;
+    font-size: 0.95rem;
+    line-height: 1.2;
+}
+
+.chat-header-sub {
+    font-size: 0.72rem;
+    opacity: 0.75;
+}
+
+/* Área de mensajes */
+.chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1rem;
+    background: #f8fafc;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+/* Burbujas */
+.mensaje-burbuja-wrapper {
+    display: flex;
+    align-items: flex-end;
+    gap: 0.4rem;
+}
+
+.mensaje-burbuja-wrapper.mio {
+    flex-direction: row-reverse;
+}
+
+.burbuja-avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #4f46e5, #818cf8);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+.mensaje-burbuja-wrapper.mio .burbuja-avatar {
+    background: linear-gradient(135deg, #10b981, #34d399);
+}
+
+.burbuja {
+    max-width: 72%;
+    padding: 0.55rem 0.85rem;
+    border-radius: 16px;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    word-break: break-word;
+    position: relative;
+}
+
+.burbuja.ellos {
+    background: white;
+    color: #1f2937;
+    border-bottom-left-radius: 4px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+}
+
+.burbuja.yo {
+    background: linear-gradient(135deg, #4f46e5, #6366f1);
+    color: white;
+    border-bottom-right-radius: 4px;
+}
+
+.burbuja-hora {
+    font-size: 0.65rem;
+    opacity: 0.6;
+    margin-top: 0.2rem;
+    text-align: right;
+}
+
+/* Input de chat */
+.chat-input-area {
+    padding: 0.75rem 1rem;
+    background: white;
+    border-top: 1px solid #e5e7eb;
+    display: flex;
+    align-items: flex-end;
+    gap: 0.5rem;
+    flex-shrink: 0;
+}
+
+.chat-input {
+    flex: 1;
+    border: 2px solid #e5e7eb;
+    border-radius: 22px;
+    padding: 0.6rem 1rem;
+    font-size: 0.9rem;
+    outline: none;
+    resize: none;
+    max-height: 100px;
+    font-family: inherit;
+    transition: border-color 0.2s;
+}
+
+.chat-input:focus {
+    border-color: #4f46e5;
+}
+
+.chat-send-btn {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #4f46e5, #6366f1);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: opacity 0.2s, transform 0.15s;
+}
+
+.chat-send-btn:hover {
+    opacity: 0.9;
+    transform: scale(1.05);
+}
+
+.chat-send-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Fecha separadora */
+.chat-date-sep {
+    text-align: center;
+    font-size: 0.72rem;
+    color: #9ca3af;
+    margin: 0.5rem 0;
+    position: relative;
+}
+
+.chat-date-sep::before,
+.chat-date-sep::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 30%;
+    height: 1px;
+    background: #e5e7eb;
+}
+.chat-date-sep::before { right: calc(35% + 1rem); }
+.chat-date-sep::after  { left:  calc(35% + 1rem); }

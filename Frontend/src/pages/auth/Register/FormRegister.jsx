@@ -4,8 +4,8 @@ import { useRegisterForm } from "./useRegisterForm";
 
 const FormRegister = () => {
     const {
-        email,
-        setEmail,
+        username,
+        setUsername,
         fullName,
         setFullName,
         password,
@@ -36,12 +36,12 @@ const FormRegister = () => {
                         </Form.Group>
 
                         <Form.Group className="mb-3">
-                            <Form.Label>Email</Form.Label>
+                            <Form.Label>Username</Form.Label>
                             <Form.Control
-                                type="email"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                placeholder="Ingresa tu email"
+                                type="username"
+                                value={username}
+                                onChange={(e) => setUsername(e.target.value)}
+                                placeholder="Ingresa tu username"
                                 required
                             />
                         </Form.Group>

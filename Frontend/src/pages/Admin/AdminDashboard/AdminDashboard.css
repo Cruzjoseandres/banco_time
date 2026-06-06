@@ -1,0 +1,432 @@
+.admin-dashboard-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 1.5rem 1rem;
+}
+
+/* Header de la sección */
+.admin-header {
+    background: linear-gradient(135deg, #1e293b, #0f172a);
+    color: white;
+    border-radius: 16px;
+    padding: 1.75rem 1.5rem;
+    margin-bottom: 1.5rem;
+    position: relative;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.admin-header h2 {
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin-bottom: 0.25rem;
+}
+
+.admin-badge {
+    position: absolute;
+    top: 1.75rem;
+    right: 1.5rem;
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    color: white;
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* Pestañas (Tabs) */
+.admin-tabs {
+    display: flex;
+    gap: 0.5rem;
+    background: #f1f5f9;
+    padding: 0.35rem;
+    border-radius: 10px;
+    margin-bottom: 1.5rem;
+}
+
+.admin-tab-btn {
+    flex: 1;
+    background: none;
+    border: none;
+    padding: 0.5rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #64748b;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+.admin-tab-btn:hover {
+    color: #0f172a;
+}
+
+.admin-tab-btn.activa {
+    background: white;
+    color: #4f46e5;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+/* Buscador de usuarios */
+.search-wrapper {
+    margin-bottom: 1.25rem;
+}
+
+.search-input {
+    border-radius: 10px;
+    border: 1px solid #cbd5e1;
+    padding: 0.6rem 1rem;
+    font-size: 0.875rem;
+    width: 100%;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: #4f46e5;
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+/* Tablas Administrativas */
+.admin-table-card {
+    border: none;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    border-radius: 14px;
+    overflow: hidden;
+    margin-bottom: 2rem;
+}
+
+.table-responsive {
+    margin: 0;
+}
+
+.admin-table {
+    margin-bottom: 0;
+    font-size: 0.875rem;
+}
+
+.admin-table th {
+    background: #f8fafc;
+    color: #475569;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.72rem;
+    letter-spacing: 0.05em;
+    padding: 0.85rem 1rem;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.admin-table td {
+    padding: 0.85rem 1rem;
+    vertical-align: middle;
+    color: #334155;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.admin-user-cell {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.admin-user-avatar {
+    width: 32px;
+    height: 32px;
+    background: #e0e7ff;
+    color: #4f46e5;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.85rem;
+}
+
+.role-badge {
+    display: inline-block;
+    padding: 0.15rem 0.5rem;
+    font-size: 0.72rem;
+    font-weight: 700;
+    border-radius: 4px;
+    text-transform: uppercase;
+}
+
+.role-badge.admin {
+    background: #fef3c7;
+    color: #d97706;
+}
+
+.role-badge.user {
+    background: #e0f2fe;
+    color: #0284c7;
+}
+
+/* Acciones de Tabla */
+.btn-action {
+    padding: 0.3rem 0.5rem;
+    font-size: 0.8rem;
+    border-radius: 6px;
+    margin-left: 0.35rem;
+    font-weight: 500;
+    transition: all 0.15s;
+}
+
+.btn-action:first-child {
+    margin-left: 0;
+}
+
+/* Modales e Inputs de Edición */
+.edit-panel {
+    background: #f8fafc;
+    border: 1px solid #cbd5e1;
+    border-radius: 12px;
+    padding: 1.25rem;
+    margin-bottom: 1.5rem;
+    animation: slideDown 0.25s ease-out;
+}
+
+.edit-panel-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin-bottom: 0.85rem;
+    color: #0f172a;
+}
+
+/* Secciones de Asignación */
+.materias-list-assign {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin: 0.85rem 0;
+}
+
+.materia-check-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.35em 0.8em;
+    border-radius: 20px;
+    font-size: 0.78rem;
+    font-weight: 500;
+    cursor: pointer;
+    border: 2px solid transparent;
+    user-select: none;
+    transition: all 0.15s;
+}
+
+.materia-check-badge.assigned {
+    background: #e0f2fe;
+    color: #0369a1;
+    border-color: #bae6fd;
+}
+
+.materia-check-badge.unassigned {
+    background: #f1f5f9;
+    color: #64748b;
+    border-color: #cbd5e1;
+}
+
+.materia-check-badge.unassigned:hover {
+    background: #e0e7ff;
+    color: #4f46e5;
+    border-color: #c7d2fe;
+}
+
+/* Animaciones */
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* --- ESTILOS DE REPORTES (ÁREA SOCIAL) --- */
+.reports-section {
+    animation: slideDown 0.3s ease-out;
+}
+
+/* Rejilla de métricas de impacto */
+.reports-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.report-card {
+    background: white;
+    border-radius: 14px;
+    padding: 1.25rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border: 1px solid #f1f5f9;
+}
+
+.report-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08);
+}
+
+.report-card-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f8fafc;
+    flex-shrink: 0;
+}
+
+.report-card-icon svg {
+    width: 22px;
+    height: 22px;
+}
+
+.report-card-content {
+    flex-grow: 1;
+}
+
+.report-card-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    display: block;
+    margin-bottom: 0.25rem;
+}
+
+.report-card-value {
+    font-size: 1.35rem;
+    font-weight: 800;
+    margin-bottom: 0.25rem;
+    line-height: 1.2;
+}
+
+.report-card-desc {
+    font-size: 0.72rem;
+    color: #64748b;
+    margin: 0;
+    line-height: 1.35;
+}
+
+/* Gráficos de Reportes */
+.report-graph-card {
+    background: white;
+    border-radius: 14px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    border: 1px solid #f1f5f9 !important;
+}
+
+.graph-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #0f172a;
+}
+
+.svg-container {
+    background: #fafafc;
+    border-radius: 10px;
+    padding: 0.5rem;
+    border: 1px solid #f1f5f9;
+}
+
+/* Animaciones del gráfico */
+.interactive-chart circle {
+    transition: r 0.15s ease, fill 0.15s ease;
+}
+
+/* Tooltip dinámico del gráfico */
+.chart-tooltip {
+    transition: left 0.15s ease-out, top 0.15s ease-out;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Demanda de materias */
+.materias-bar-container {
+    padding-top: 0.5rem;
+}
+
+.materia-progress-row .progress {
+    background-color: #f1f5f9 !important;
+}
+
+.materia-progress-row .progress-bar {
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(99, 102, 241, 0.2);
+}
+
+/* Distribución de citas */
+.appointment-stacked-bar .d-flex {
+    background: #e2e8f0;
+}
+
+.appointment-stacked-bar .d-flex div {
+    height: 100%;
+    cursor: pointer;
+    transition: opacity 0.15s ease;
+}
+
+.appointment-stacked-bar .d-flex div:hover {
+    opacity: 0.85;
+}
+
+/* Testimonios */
+.testimonials-feed {
+    max-height: 280px;
+    overflow-y: auto;
+    padding-right: 0.25rem;
+}
+
+.testimonials-feed::-webkit-scrollbar {
+    width: 6px;
+}
+
+.testimonials-feed::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 10px;
+}
+
+.testimonials-feed::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 10px;
+}
+
+.testimonial-bubble {
+    background-color: #f8fafc !important;
+    border-color: #4f46e5 !important;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.02);
+    transition: transform 0.15s ease;
+}
+
+.testimonial-bubble:hover {
+    transform: scale(1.005);
+}
+
+.testimonial-bubble svg {
+    margin-right: 1px;
+}
+
+.testimonial-bubble svg path {
+    stroke-linejoin: round;
+}
+
+/* Colores de iconos en tarjetas de reportes */
+.text-primary { color: #4f46e5 !important; }
+.text-success { color: #10b981 !important; }
+.text-warning { color: #f59e0b !important; }
+.text-info { color: #06b6d4 !important; }
+
+/* Adaptabilidad dark mode/premium colors */
+.bg-light { background-color: #f8fafc !important; }
+.text-slate-800 { color: #1e293b; }
+.text-slate-700 { color: #334155; }
+.text-slate-600 { color: #475569; }
+

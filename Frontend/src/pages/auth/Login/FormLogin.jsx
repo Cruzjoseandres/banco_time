@@ -4,8 +4,8 @@ import { useLoginForm } from "./useLoginForm";
 
 const FormLogin = () => {
     const {
-        email,
-        setEmail,
+        username,
+        setUsername,
         password,
         setPassword,
         error,
@@ -21,12 +21,12 @@ const FormLogin = () => {
 
                     <Form onSubmit={handleSubmit}>
                         <Form.Group className="mb-3">
-                            <Form.Label>Email</Form.Label>
+                            <Form.Label>Username</Form.Label>
                             <Form.Control
-                                type="email"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                placeholder="Ingresa tu email"
+                                type="text"
+                                value={username}
+                                onChange={(e) => setUsername(e.target.value)}
+                                placeholder="Ingresa tu username"
                                 required
                             />
                         </Form.Group>

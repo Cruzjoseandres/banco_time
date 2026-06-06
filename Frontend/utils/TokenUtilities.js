@@ -42,4 +42,12 @@ const getUserInfo = () => {
     return userInfo ? JSON.parse(userInfo) : null;
 }
 
-export { saveAccessToken, getAccessToken, removeAccessToken, decodeToken, getUserFromToken, saveUserInfo, getUserInfo };
+const isTokenExpired = (token) => {
+    if (!token) return true;
+    const decoded = decodeToken(token);
+    if (!decoded || !decoded.exp) return true;
+    const now = Math.floor(Date.now() / 1000);
+    return decoded.exp < now;
+}
+
+export { saveAccessToken, getAccessToken, removeAccessToken, decodeToken, getUserFromToken, saveUserInfo, getUserInfo, isTokenExpired };

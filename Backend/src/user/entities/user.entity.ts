@@ -1,25 +1,52 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import {Lugar} from '../../lugar/entities/lugar.entity';
-import {Inscripcion} from '../../inscripcion/entities/inscripcion.entity';
+import { Cita } from 'src/cita/entities/cita.entity';
+import { Especialidad } from 'src/especialidad/entities/especialidad.entity';
+import { Mensaje } from 'src/mensajes/entities/mensaje.entity';
+import { Materia } from 'src/materia/entities/materia.entity';
+import { Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Transaccion } from './transaccion.entity';
 
 @Entity()
 export class User {
   @PrimaryGeneratedColumn()
-  id:number;
+  id: number;
   @Column({ unique: true })
-  email:string;
+  username: string;
   @Column()
-  password:string;
+  password: string;
   @Column()
-  fullName:string;
+  fullName: string;
+  @Column({ default: 5 })
+  saldoHoras: number = 5;
   @Column({ default: 'user' })
-  role:string;
+  role: string;
+  @Column({ nullable: true, default: '' })
+  imagenPerfil: string;
+  @Column({ nullable: true })
+  telefono: string;
+  @Column({ default: 0 })
+  totalTutoriasRealizadas: number;
+  @Column({ default: 0 })
+  promedioCalificacion: number;
 
-  //Un Usuario (Organizador) -> Muchos Lugares♦
-  @OneToMany(() => Lugar, (lugar) => lugar.organizador)
-  lugares: Lugar[];
+  @ManyToMany(() => Especialidad, (especialidad) => especialidad.users, { nullable: false })
+  @JoinTable()
+  especialidades: Especialidad[];
 
-  //Un Usuario (Participante) -> Muchas Inscripciones
-  @OneToMany(() => Inscripcion, (inscripcion) => inscripcion.user)
-  inscripcions: Inscripcion[];
+  @ManyToMany(() => Materia, (materia) => materia.users, { nullable: false })
+  @JoinTable()
+  materias: Materia[];
+
+  //Muchos Usuarios -> Muchas Citas
+  @ManyToMany(() => Cita, (cita) => cita.estudiante)
+  citasEstudiante: Cita[];
+  //Muchos Usuarios -> Muchas Citas
+  @ManyToMany(() => Cita, (cita) => cita.tutor)
+  citasTutor: Cita[];
+
+  // Un usuario -> Muchos mensajes
+  @OneToMany(() => Mensaje, (mensaje) => mensaje.emisor)
+  mensajesEnviados: Mensaje[];
+
+  @OneToMany(() => Transaccion, (transaccion) => transaccion.usuario)
+  transacciones: Transaccion[];
 }

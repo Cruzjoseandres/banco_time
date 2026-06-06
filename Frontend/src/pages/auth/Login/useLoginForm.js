@@ -2,7 +2,7 @@ import { useState } from "react";
 import useAuthentication from "../../../../hooks/useAuthentication";
 
 export const useLoginForm = () => {
-    const [email, setEmail] = useState("");
+    const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState(null);
     const { doLogin } = useAuthentication();
@@ -11,7 +11,7 @@ export const useLoginForm = () => {
         e.preventDefault();
         setError(null);
 
-        const success = await doLogin({ email, password });
+        const success = await doLogin({ username, password });
 
         if (!success) {
             setError("Error al iniciar sesión. Verifica tus credenciales.");
@@ -19,8 +19,8 @@ export const useLoginForm = () => {
     };
 
     return {
-        email,
-        setEmail,
+        username,
+        setUsername,
         password,
         setPassword,
         error,

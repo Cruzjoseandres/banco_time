@@ -1,6 +1,6 @@
 export class UserRegisterResponseDto {
   id: number;
-  email: string;
+  username: string;
   fullName: string;
   role: string;
 }

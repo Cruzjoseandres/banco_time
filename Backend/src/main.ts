@@ -22,6 +22,6 @@ async function bootstrap() {
     // Esto se queda por si acaso, aunque ya usamos Cloudinary
     app.use('/uploads', express.static(join(process.cwd(), 'uploads')));
 
-    await app.listen(process.env.PORT || 3000);
+    await app.listen(process.env.PORT || 3000, '0.0.0.0');
 }
 bootstrap();

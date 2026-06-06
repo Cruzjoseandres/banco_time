@@ -1,0 +1,156 @@
+.buscar-tutores-container {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+.buscar-tutores-container h1 {
+    font-size: 1.4rem;
+    margin-bottom: 0.25rem;
+}
+
+.buscar-subtitulo {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    margin-bottom: 1.25rem;
+}
+
+.buscar-form {
+    background: white;
+    border-radius: 14px;
+    padding: 1rem;
+    box-shadow: var(--shadow-md);
+    margin-bottom: 1.25rem;
+}
+
+.buscar-form-row {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.buscar-form-row .form-control,
+.buscar-form-row .form-select {
+    flex: 1 1 120px;
+}
+
+.tutor-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.85rem;
+}
+
+.tutor-card {
+    border-radius: 14px;
+    border: none;
+    box-shadow: 0 2px 10px rgba(79, 70, 229, 0.08);
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    padding: 0.85rem 1rem;
+    transition: box-shadow 0.2s;
+    cursor: pointer;
+}
+
+.tutor-card:hover {
+    box-shadow: 0 4px 20px rgba(79, 70, 229, 0.16);
+}
+
+.tutor-card-avatar {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #4f46e5, #818cf8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 700;
+    font-size: 1.25rem;
+    flex-shrink: 0;
+}
+
+.tutor-card-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.tutor-card-nombre {
+    font-weight: 600;
+    color: #1f2937;
+    font-size: 0.95rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.tutor-card-especialidades {
+    font-size: 0.78rem;
+    color: #6b7280;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 0.2rem;
+}
+
+.tutor-card-rating {
+    font-size: 0.85rem;
+    color: #f59e0b;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.tutor-card-rating span {
+    color: #6b7280;
+    font-size: 0.78rem;
+}
+
+.tutor-card-stats {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.78rem;
+    color: #6b7280;
+    margin-top: 0.15rem;
+}
+
+.tutor-card-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    flex-shrink: 0;
+}
+
+.tutor-card-actions .btn {
+    font-size: 0.78rem;
+    padding: 0.35rem 0.75rem;
+    white-space: nowrap;
+}
+
+.section-label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-secondary);
+    margin-bottom: 0.75rem;
+}
+
+@media (min-width: 576px) {
+    .tutor-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+    .tutor-card {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 1rem;
+    }
+    .tutor-card-actions {
+        flex-direction: row;
+        width: 100%;
+    }
+    .tutor-card-actions .btn {
+        flex: 1;
+    }
+}

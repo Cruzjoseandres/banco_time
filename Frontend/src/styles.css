@@ -1,6 +1,6 @@
 /* ============================================
-   Sistema de Gestión de Eventos
-   Estilos Globales - Diseño Moderno y Limpio
+   Banco de Tiempo
+   Estilos Globales — Diseño Moderno Mobile-First
    ============================================ */
 
 /* Variables CSS */
@@ -39,7 +39,7 @@ body {
 /* Contenedores */
 .container {
   max-width: 1200px;
-  padding: 0 20px;
+  padding: 0 16px;
 }
 
 /* Títulos */
@@ -50,14 +50,14 @@ h1, h2, h3, h4, h5 {
 }
 
 h1 {
-  font-size: 2rem;
+  font-size: 1.75rem;
   background: linear-gradient(135deg, var(--primary-color), #818cf8);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
-/* Cards mejoradas */
+/* Cards */
 .card {
   background: var(--card-background);
   border: none;
@@ -69,11 +69,10 @@ h1 {
 
 .card:hover {
   box-shadow: var(--shadow-lg);
-  transform: translateY(-2px);
 }
 
 .card-body {
-  padding: 1.5rem;
+  padding: 1.25rem;
 }
 
 .card-title {
@@ -138,8 +137,9 @@ h1 {
 .form-select {
   border-radius: 8px;
   border: 2px solid var(--border-color);
-  padding: 0.75rem 1rem;
+  padding: 0.65rem 1rem;
   transition: var(--transition);
+  font-size: 0.9rem;
 }
 
 .form-control:focus,
@@ -151,52 +151,24 @@ h1 {
 .form-label {
   font-weight: 500;
   color: var(--text-primary);
-  margin-bottom: 0.5rem;
-}
-
-/* Tablas */
-.table {
-  background: var(--card-background);
-  border-radius: var(--border-radius);
-  overflow: hidden;
-  box-shadow: var(--shadow-sm);
-}
-
-.table thead th {
-  background: linear-gradient(135deg, var(--primary-color), #6366f1);
-  color: white;
-  font-weight: 500;
-  border: none;
-  padding: 1rem;
-}
-
-.table tbody td {
-  padding: 1rem;
-  vertical-align: middle;
-  border-color: var(--border-color);
-}
-
-.table-striped tbody tr:nth-of-type(odd) {
-  background-color: rgba(79, 70, 229, 0.02);
-}
-
-.table tbody tr:hover {
-  background-color: rgba(79, 70, 229, 0.05);
+  margin-bottom: 0.4rem;
+  font-size: 0.875rem;
 }
 
 /* Badges */
 .badge {
-  padding: 0.5em 0.85em;
+  padding: 0.4em 0.8em;
   font-weight: 500;
   border-radius: 6px;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
 }
 
 /* Alertas */
 .alert {
   border: none;
   border-radius: var(--border-radius);
-  padding: 1rem 1.25rem;
+  padding: 0.85rem 1rem;
+  font-size: 0.875rem;
 }
 
 .alert-success {
@@ -228,32 +200,34 @@ h1 {
 
 .modal-header {
   border-bottom: 1px solid var(--border-color);
-  padding: 1.25rem 1.5rem;
+  padding: 1rem 1.25rem;
 }
 
 .modal-footer {
   border-top: 1px solid var(--border-color);
-  padding: 1rem 1.5rem;
+  padding: 0.85rem 1.25rem;
 }
 
 /* Navbar */
 .navbar {
-  background: linear-gradient(135deg, #1f2937, #374151) !important;
+  background: linear-gradient(135deg, #1f2937, #111827) !important;
   box-shadow: var(--shadow-md);
-  padding: 0.75rem 0;
+  padding: 0.6rem 0;
 }
 
 .navbar-brand {
-  font-weight: 600;
-  font-size: 1.25rem;
+  font-weight: 700;
+  font-size: 1.1rem;
+  letter-spacing: -0.02em;
 }
 
 .nav-link {
   font-weight: 500;
   transition: var(--transition);
-  padding: 0.5rem 1rem !important;
+  padding: 0.45rem 0.85rem !important;
   border-radius: 6px;
-  margin: 0 0.25rem;
+  margin: 0 0.15rem;
+  font-size: 0.9rem;
 }
 
 .nav-link:hover {
@@ -262,12 +236,12 @@ h1 {
 
 /* Spinner */
 .spinner-border {
-  width: 3rem;
-  height: 3rem;
+  width: 2.5rem;
+  height: 2.5rem;
   color: var(--primary-color);
 }
 
-/* Mapas */
+/* Leaflet — usado en CrearCita */
 .leaflet-container {
   z-index: 1;
   border-radius: var(--border-radius);
@@ -279,55 +253,48 @@ h1 {
   border: none;
   border-radius: 8px;
   box-shadow: var(--shadow-lg);
-  padding: 0.5rem;
+  padding: 0.4rem;
+  min-width: 180px;
 }
 
 .dropdown-item {
   border-radius: 6px;
-  padding: 0.5rem 1rem;
+  padding: 0.45rem 0.85rem;
   transition: var(--transition);
+  font-size: 0.875rem;
 }
 
 .dropdown-item:hover {
-  background: rgba(79, 70, 229, 0.1);
+  background: rgba(79, 70, 229, 0.08);
 }
 
-/* Responsive */
-@media (max-width: 768px) {
+/* Animaciones */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.card, .alert {
+  animation: fadeIn 0.25s ease;
+}
+
+/* ============================================
+   Responsive — Mobile First
+   ============================================ */
+@media (max-width: 576px) {
   .container {
-    padding: 15px;
+    padding: 0 12px;
   }
 
   h1 {
-    font-size: 1.5rem;
+    font-size: 1.35rem;
   }
 
   .card-body {
     padding: 1rem;
   }
 
-  .btn {
-    width: 100%;
-    margin-bottom: 0.5rem;
+  .modal-dialog {
+    margin: 0.5rem;
   }
-
-  .d-flex.gap-2 {
-    flex-direction: column;
-  }
-}
-
-/* Animaciones sutiles */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.card, .alert {
-  animation: fadeIn 0.3s ease;
 }

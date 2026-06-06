@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { register } from "../../../../services/AuthService";
 
 export const useRegisterForm = () => {
-    const [email, setEmail] = useState("");
+    const [username, setUsername] = useState("");
     const [fullName, setFullName] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState(null);
@@ -16,7 +16,7 @@ export const useRegisterForm = () => {
         setSuccess(null);
 
         try {
-            await register({ email, password, fullName });
+            await register({ username, password, fullName });
             setSuccess("¡Registro exitoso! Redirigiendo al inicio de sesión...");
             setTimeout(() => {
                 navigate("/login");
@@ -28,8 +28,8 @@ export const useRegisterForm = () => {
     };
 
     return {
-        email,
-        setEmail,
+        username,
+        setUsername,
         fullName,
         setFullName,
         password,

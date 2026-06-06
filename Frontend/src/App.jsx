@@ -1,30 +1,23 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Header from './components/Header.jsx';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
 
-// Páginas públicas
-import EventoList from './pages/Evento/EventoList/EventoList.jsx';
-import EventoDetail from './pages/Evento/EventoDetail/EventoDetail.jsx';
+// Autenticación
 import FormLogin from './pages/auth/Login/FormLogin.jsx';
 import FormRegister from './pages/auth/Register/FormRegister.jsx';
 
-// Páginas de Participante
-import MisInscripciones from './pages/Participante/MisInscripciones/MisInscripciones.jsx';
+// Banco de Tiempo — Vistas de Usuario
+import BuscarTutores from './pages/User/BuscarTutores/BuscarTutores.jsx';
+import MisCitas from './pages/User/MisCitas/MisCitas.jsx';
+import CrearCita from './pages/User/CrearCita/CrearCita.jsx';
+import MiPerfil from './pages/User/MiPerfil/MiPerfil.jsx';
+import ChatCita from './pages/User/ChatCita/ChatCita.jsx';
+import PerfilTutor from './pages/User/PerfilTutor/PerfilTutor.jsx';
+import Chats from './pages/User/Chats/Chats.jsx';
+import ChatConversacion from './pages/User/ChatConversacion/ChatConversacion.jsx';
 
-// Páginas de Organizador
-import EventosOrganizador from './pages/Organizador/EventosOrganizador/EventosOrganizador.jsx';
-import EventoCreate from './pages/Evento/EventoCreate/EventoCreate.jsx';
-import EventoEdit from './pages/Evento/EventoEdit/EventoEdit.jsx';
-import VerificarComprobantes from './pages/Organizador/VerificarComprobantes/VerificarComprobantes.jsx';
-import ReportesEvento from './pages/Organizador/ReportesEvento/ReportesEvento.jsx';
-
-// Páginas de Validador
-import ValidadorHome from './pages/Validador/ValidadorHome/ValidadorHome.jsx';
-import ValidarQR from './pages/Validador/ValidarQR/ValidarQR.jsx';
-import EscanearQR from './pages/Validador/EscanearQR/EscanearQR.jsx';
-
-// Páginas de Admin
-import AdminUsuarios from './pages/Admin/AdminUsuarios/AdminUsuarios.jsx';
+// Banco de Tiempo — Vista de Administrador
+import AdminDashboard from './pages/Admin/AdminDashboard/AdminDashboard.jsx';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles.css';
@@ -35,103 +28,84 @@ const App = () => {
       <Header />
       <Routes>
         {/* Rutas públicas */}
-        <Route path="/" element={<EventoList />} />
-        <Route path="/eventos/:id" element={<EventoDetail />} />
+        <Route path="/" element={<BuscarTutores />} />
         <Route path="/login" element={<FormLogin />} />
         <Route path="/register" element={<FormRegister />} />
 
-        {/* Rutas de Participante (user) */}
+        {/* Rutas de Administrador */}
         <Route
-          path="/participante/mis-inscripciones"
+          path="/admin/dashboard"
+          element={
+            <ProtectedRoute allowedRoles={['admin']}>
+              <AdminDashboard />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Rutas de Usuario — Banco de Tiempo */}
+        <Route path="/user" element={<Navigate to="/user/buscar-tutores" replace />} />
+        <Route path="/user/" element={<Navigate to="/user/buscar-tutores" replace />} />
+        <Route
+          path="/user/buscar-tutores"
           element={
             <ProtectedRoute allowedRoles={['user']}>
-              <MisInscripciones />
-            </ProtectedRoute>
-          }
-        />
-
-        {/* Rutas de Organizador */}
-        <Route
-          path="/organizador/eventos"
-          element={
-            <ProtectedRoute allowedRoles={['organizador']}>
-              <EventosOrganizador />
+              <BuscarTutores />
             </ProtectedRoute>
           }
         />
         <Route
-          path="/organizador/eventos/crear"
+          path="/user/mis-citas"
           element={
-            <ProtectedRoute allowedRoles={['organizador']}>
-              <EventoCreate />
+            <ProtectedRoute allowedRoles={['user']}>
+              <MisCitas />
             </ProtectedRoute>
           }
         />
         <Route
-          path="/organizador/eventos/editar/:id"
+          path="/user/crear-cita"
           element={
-            <ProtectedRoute allowedRoles={['organizador']}>
-              <EventoEdit />
+            <ProtectedRoute allowedRoles={['user']}>
+              <CrearCita />
             </ProtectedRoute>
           }
         />
         <Route
-          path="/organizador/comprobantes/:eventoId"
+          path="/user/mi-perfil"
           element={
-            <ProtectedRoute allowedRoles={['organizador']}>
-              <VerificarComprobantes />
+            <ProtectedRoute allowedRoles={['user']}>
+              <MiPerfil />
             </ProtectedRoute>
           }
         />
         <Route
-          path="/organizador/reportes/:eventoId"
+          path="/user/chats"
           element={
-            <ProtectedRoute allowedRoles={['organizador']}>
-              <ReportesEvento />
-            </ProtectedRoute>
-          }
-        />
-
-        {/* Rutas de Validador */}
-        <Route
-          path="/validador"
-          element={
-            <ProtectedRoute allowedRoles={['validator']}>
-              <ValidadorHome />
+            <ProtectedRoute allowedRoles={['user']}>
+              <Chats />
             </ProtectedRoute>
           }
         />
         <Route
-          path="/validador/escanear"
+          path="/user/conversacion/:conversacionId"
           element={
-            <ProtectedRoute allowedRoles={['validator']}>
-              <EscanearQR />
+            <ProtectedRoute allowedRoles={['user']}>
+              <ChatConversacion />
             </ProtectedRoute>
           }
         />
         <Route
-          path="/validador/validar/:token"
+          path="/user/chat/:citaId"
           element={
-            <ProtectedRoute allowedRoles={['validator']}>
-              <ValidarQR />
-            </ProtectedRoute>
-          }
-        />
-
-        {/* Rutas de Admin */}
-        <Route
-          path="/admin"
-          element={
-            <ProtectedRoute allowedRoles={['admin']}>
-              <AdminUsuarios />
+            <ProtectedRoute allowedRoles={['user']}>
+              <ChatCita />
             </ProtectedRoute>
           }
         />
         <Route
-          path="/admin/usuarios"
+          path="/user/tutor/:tutorId"
           element={
-            <ProtectedRoute allowedRoles={['admin']}>
-              <AdminUsuarios />
+            <ProtectedRoute allowedRoles={['user']}>
+              <PerfilTutor />
             </ProtectedRoute>
           }
         />

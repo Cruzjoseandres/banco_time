@@ -1,0 +1,209 @@
+.mis-citas-container {
+    padding: 1rem;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.mis-citas-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.25rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.mis-citas-header h1 {
+    font-size: 1.5rem;
+    margin: 0;
+}
+
+.cita-card {
+    border-radius: 14px;
+    border: none;
+    box-shadow: 0 2px 12px rgba(79, 70, 229, 0.09);
+    margin-bottom: 1rem;
+    transition: box-shadow 0.2s;
+    overflow: hidden;
+}
+
+.cita-card:hover {
+    box-shadow: 0 6px 24px rgba(79, 70, 229, 0.16);
+    transform: none; /* no mover en mobile */
+}
+
+.cita-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.85rem 1rem 0.5rem;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.cita-otro-usuario {
+    font-weight: 600;
+    font-size: 1rem;
+    color: #1f2937;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.cita-rol-badge {
+    font-size: 0.65rem;
+    padding: 0.25em 0.6em;
+    background: #ede9fe;
+    color: #4f46e5;
+    border-radius: 20px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.cita-info-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.4rem;
+    font-size: 0.875rem;
+    color: #4b5563;
+    margin-bottom: 0.3rem;
+}
+
+.cita-info-row svg {
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.cita-descripcion {
+    font-size: 0.875rem;
+    color: #6b7280;
+    margin-bottom: 0.75rem;
+    line-height: 1.4;
+}
+
+.cita-acciones {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+}
+
+.cita-acciones .btn {
+    flex: 1 1 calc(50% - 0.25rem);
+    min-width: 100px;
+    font-size: 0.82rem;
+    padding: 0.5rem 0.5rem;
+    border-radius: 8px;
+}
+
+.cita-acciones .btn-full {
+    flex: 1 1 100%;
+}
+
+.codigo-confirmacion-box {
+    background: linear-gradient(135deg, #ede9fe, #ddd6fe);
+    border-radius: 10px;
+    padding: 0.75rem 1rem;
+    text-align: center;
+    margin-top: 0.75rem;
+}
+
+.codigo-confirmacion-box p {
+    font-size: 0.78rem;
+    color: #4f46e5;
+    margin-bottom: 0.25rem;
+    font-weight: 500;
+}
+
+.codigo-valor {
+    font-size: 1.75rem;
+    font-weight: 800;
+    letter-spacing: 0.3em;
+    color: #3730a3;
+    font-family: 'Courier New', monospace;
+}
+
+.notificacion-toast {
+    position: fixed;
+    top: 70px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+    min-width: 300px;
+    max-width: 90vw;
+    animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+    from { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+    to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+.estrellas-calificar {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+    margin: 1rem 0;
+}
+
+.estrella-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 2rem;
+    padding: 0;
+    transition: transform 0.15s;
+    line-height: 1;
+}
+
+.estrella-btn:hover {
+    transform: scale(1.2);
+}
+
+/* Mobile */
+@media (max-width: 576px) {
+    .mis-citas-container {
+        padding: 0.75rem;
+    }
+    .cita-acciones .btn {
+        flex: 1 1 100%;
+    }
+}
+
+/* Pestañas personalizadas */
+.custom-tabs-container {
+    display: flex;
+    background: #f1f5f9;
+    padding: 0.35rem;
+    border-radius: 12px;
+    margin-bottom: 1.5rem;
+    gap: 0.25rem;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.custom-tab-btn {
+    flex: 1;
+    border: none;
+    background: transparent;
+    padding: 0.6rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #64748b;
+    border-radius: 9px;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.custom-tab-btn:hover {
+    color: #334155;
+}
+
+.custom-tab-btn.active {
+    background: #ffffff;
+    color: #4f46e5;
+    box-shadow: 0 2px 8px rgba(99, 102, 241, 0.08), 0 1px 3px rgba(0, 0, 0, 0.02);
+}

@@ -37,7 +37,7 @@ const register = (registerData) => {
     });
 }
 
-const getMe = () => {
+const   getMe = () => {
     return new Promise((resolve, reject) => {
         axios.get(`${API_URL}/auth/me`, getAuthHeaders())
             .then((response) => {
