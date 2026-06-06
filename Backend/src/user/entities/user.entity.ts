@@ -15,7 +15,7 @@ export class User {
   password: string;
   @Column()
   fullName: string;
-  @Column({ default: 5 })
+  @Column({ type: 'float', default: 5 })
   saldoHoras: number = 5;
   @Column({ default: 'user' })
   role: string;
@@ -25,7 +25,7 @@ export class User {
   telefono: string;
   @Column({ default: 0 })
   totalTutoriasRealizadas: number;
-  @Column({ default: 0 })
+  @Column({ type: 'float', default: 0 })
   promedioCalificacion: number;
 
   @ManyToMany(() => Especialidad, (especialidad) => especialidad.users, { nullable: false })
