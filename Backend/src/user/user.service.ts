@@ -142,33 +142,51 @@ export class UserService {
       queryBuilder.andWhere('user.promedioCalificacion >= :rating', { rating: Number(filters.rating) });
     }
 
-    // Filtrar por especialidad (id o nombre)
+    const allTutors = await queryBuilder.getMany();
+
+    // Aplicar filtros en memoria con soporte de búsqueda difusa (fuzzy search) y checklist de especialidades
+    let filtered = allTutors;
+
+    // Filtro por especialidad (soporta IDs separados por coma)
     if (filters.especialidad) {
-      if (!isNaN(Number(filters.especialidad))) {
-        queryBuilder.andWhere('especialidad.id = :especialidadId', { especialidadId: Number(filters.especialidad) });
+      const specIds = filters.especialidad.split(',').map(id => Number(id.trim())).filter(id => !isNaN(id));
+      if (specIds.length > 0) {
+        filtered = filtered.filter(user => 
+          user.especialidades?.some(e => specIds.includes(e.id))
+        );
       } else {
-        queryBuilder.andWhere('especialidad.detalleEspecialidad LIKE :especialidadName', { especialidadName: `%${filters.especialidad}%` });
+        filtered = filtered.filter(user => 
+          user.especialidades?.some(e => matchesFuzzy(e.detalleEspecialidad, filters.especialidad))
+        );
       }
     }
 
-    // Filtrar por materia (id o nombre)
+    // Filtro por materia (ID o búsqueda exacta/fuzzy)
     if (filters.materia) {
       if (!isNaN(Number(filters.materia))) {
-        queryBuilder.andWhere('materia.id = :materiaId', { materiaId: Number(filters.materia) });
+        const matId = Number(filters.materia);
+        filtered = filtered.filter(user => 
+          user.materias?.some(m => m.id === matId)
+        );
       } else {
-        queryBuilder.andWhere('materia.detalleMateria LIKE :materiaName', { materiaName: `%${filters.materia}%` });
+        filtered = filtered.filter(user => 
+          user.materias?.some(m => matchesFuzzy(m.detalleMateria, filters.materia))
+        );
       }
     }
 
-    // Búsqueda textual general
+    // Filtro de búsqueda textual general `q` (búsqueda profesional difusa tolerante a errores)
     if (filters.q) {
-      queryBuilder.andWhere(
-        '(user.fullName LIKE :q OR user.username LIKE :q OR especialidad.detalleEspecialidad LIKE :q OR materia.detalleMateria LIKE :q)',
-        { q: `%${filters.q}%` }
-      );
+      filtered = filtered.filter(user => {
+        if (matchesFuzzy(user.fullName, filters.q)) return true;
+        if (matchesFuzzy(user.username, filters.q)) return true;
+        if (user.especialidades?.some(e => matchesFuzzy(e.detalleEspecialidad, filters.q))) return true;
+        if (user.materias?.some(m => matchesFuzzy(m.detalleMateria, filters.q))) return true;
+        return false;
+      });
     }
 
-    return await queryBuilder.getMany();
+    return filtered;
   }
 
   async getSuggestions(limit: number = 6) {
@@ -207,5 +225,75 @@ export class UserService {
       console.log('Admin user seeded successfully (admin / admin123).');
     }
   }
+}
+
+// --- FUNCIONES AUXILIARES PARA BÚSQUEDA DIFUSA (FUZZY SEARCH) ---
+
+function normalize(str: string): string {
+  return str
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "") // Remueve acentos / diacríticos
+    .replace(/[^a-z0-9 ]/g, "")      // Remueve caracteres especiales
+    .trim();
+}
+
+function levenshteinDistance(s1: string, s2: string): number {
+  const m = s1.length;
+  const n = s2.length;
+  const dp = Array.from({ length: m + 1 }, () => Array(n + 1).fill(0));
+  for (let i = 0; i <= m; i++) dp[i][0] = i;
+  for (let j = 0; j <= n; j++) dp[0][j] = j;
+  for (let i = 1; i <= m; i++) {
+    for (let j = 1; j <= n; j++) {
+      if (s1[i - 1] === s2[j - 1]) {
+        dp[i][j] = dp[i - 1][j - 1];
+      } else {
+        dp[i][j] = Math.min(
+          dp[i - 1][j] + 1,    // Eliminación
+          dp[i][j - 1] + 1,    // Inserción
+          dp[i - 1][j - 1] + 1 // Sustitución
+        );
+      }
+    }
+  }
+  return dp[m][n];
+}
+
+function matchesFuzzy(target: string, query?: string): boolean {
+  if (!query) return true;
+  
+  const normTarget = normalize(target);
+  const normQuery = normalize(query);
+  
+  // 1. Coincidencia exacta o subcadena directa
+  if (normTarget.includes(normQuery)) return true;
+  
+  // 2. Coincidencia sin espacios (para casos como "estructuradedatos")
+  const noSpaceTarget = normTarget.replace(/\s+/g, '');
+  const noSpaceQuery = normQuery.replace(/\s+/g, '');
+  if (noSpaceTarget.includes(noSpaceQuery)) return true;
+  
+  // 3. Comparación difusa palabra por palabra
+  const targetWords = normTarget.split(/\s+/);
+  const queryWords = normQuery.split(/\s+/);
+  
+  // Cada palabra de la consulta debe coincidir difusamente con alguna palabra del objetivo
+  return queryWords.every(qWord => {
+    if (qWord.length < 3) {
+      // Para palabras muy cortas (de 1 o 2 letras), requerir subcadena exacta
+      return targetWords.some(tWord => tWord.includes(qWord));
+    }
+    
+    return targetWords.some(tWord => {
+      // Subcadena exacta
+      if (tWord.includes(qWord) || qWord.includes(tWord)) return true;
+      
+      // Distancia de Levenshtein (tolerancia a errores ortográficos)
+      const dist = levenshteinDistance(qWord, tWord);
+      const maxAllowedDist = qWord.length >= 7 ? 2 : 1; // 2 fallos para palabras largas, 1 para cortas
+      return dist <= maxAllowedDist;
+    });
+  });
 }
 

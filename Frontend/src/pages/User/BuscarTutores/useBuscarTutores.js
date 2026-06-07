@@ -1,10 +1,11 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { buscarTutores, getSugerenciasTutores } from '../../../../services/CitaService';
+import { buscarTutores, getSugerenciasTutores, getEspecialidades } from '../../../../services/CitaService';
 
 export const useBuscarTutores = () => {
     const [tutores, setTutores] = useState([]);
     const [sugerencias, setSugerencias] = useState([]);
+    const [especialidadesList, setEspecialidadesList] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [searched, setSearched] = useState(false);
@@ -12,7 +13,7 @@ export const useBuscarTutores = () => {
     const [filtros, setFiltros] = useState({
         q: '',
         materia: '',
-        especialidad: '',
+        especialidadesIds: [],
         rating: '',
     });
 
@@ -23,11 +24,25 @@ export const useBuscarTutores = () => {
         getSugerenciasTutores(8)
             .then(data => setSugerencias(data))
             .catch(() => setSugerencias([]));
+
+        getEspecialidades()
+            .then(data => setEspecialidadesList(data))
+            .catch(() => setEspecialidadesList([]));
     }, []);
 
     const handleFiltroChange = (e) => {
         const { name, value } = e.target;
         setFiltros(prev => ({ ...prev, [name]: value }));
+    };
+
+    const handleToggleEspecialidad = (id) => {
+        setFiltros(prev => {
+            const current = prev.especialidadesIds || [];
+            const updated = current.includes(id)
+                ? current.filter(x => x !== id)
+                : [...current, id];
+            return { ...prev, especialidadesIds: updated };
+        });
     };
 
     const handleBuscar = useCallback(async (e) => {
@@ -39,7 +54,9 @@ export const useBuscarTutores = () => {
             const params = {};
             if (filtros.q) params.q = filtros.q;
             if (filtros.materia) params.materia = filtros.materia;
-            if (filtros.especialidad) params.especialidad = filtros.especialidad;
+            if (filtros.especialidadesIds && filtros.especialidadesIds.length > 0) {
+                params.especialidad = filtros.especialidadesIds.join(',');
+            }
             if (filtros.rating) params.rating = filtros.rating;
             const data = await buscarTutores(params);
             setTutores(data);
@@ -122,11 +139,13 @@ export const useBuscarTutores = () => {
 
     return {
         tutores: ofertas, // Devolvemos ofertas mapeadas como "tutores" para acoplar con la UI de forma limpia
+        especialidadesList,
         loading,
         error,
         searched,
         filtros,
         handleFiltroChange,
+        handleToggleEspecialidad,
         handleBuscar,
         handleVerPerfil,
         renderEstrellas,

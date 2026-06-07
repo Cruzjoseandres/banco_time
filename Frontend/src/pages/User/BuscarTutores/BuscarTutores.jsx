@@ -1,15 +1,17 @@
-import { Form, Button, Spinner, Alert } from 'react-bootstrap';
+import { Form, Button, Spinner, Alert, Dropdown } from 'react-bootstrap';
 import { useBuscarTutores } from './useBuscarTutores';
 import './BuscarTutores.css';
 
 const BuscarTutores = () => {
     const {
         tutores, // Lista de ofertas mapeadas (Materia + Tutor)
+        especialidadesList,
         loading,
         error,
         searched,
         filtros,
         handleFiltroChange,
+        handleToggleEspecialidad,
         handleBuscar,
         handleVerPerfil,
         renderEstrellas,
@@ -35,13 +37,40 @@ const BuscarTutores = () => {
                         />
                     </Form.Group>
                     <div className="buscar-form-row mb-2">
-                        <Form.Control
-                            type="text"
-                            name="especialidad"
-                            value={filtros.especialidad}
-                            onChange={handleFiltroChange}
-                            placeholder="Especialidad"
-                        />
+                        <Dropdown className="flex-grow-1">
+                            <Dropdown.Toggle 
+                                variant="light" 
+                                id="dropdown-especialidad" 
+                                className="w-100 text-start d-flex justify-content-between align-items-center"
+                                style={{
+                                    border: '1px solid #dee2e6',
+                                    borderRadius: '12px',
+                                    padding: '10px 15px',
+                                    backgroundColor: '#fff',
+                                    color: '#495057'
+                                }}
+                            >
+                                <span className="text-truncate">
+                                    {filtros.especialidadesIds?.length === 0 
+                                        ? 'Seleccionar Especialidades' 
+                                        : `Especialidades (${filtros.especialidadesIds.length})`}
+                                </span>
+                            </Dropdown.Toggle>
+                            <Dropdown.Menu className="w-100 px-3 py-2" style={{ maxHeight: '250px', overflowY: 'auto', borderRadius: '12px' }}>
+                                {especialidadesList.map(esp => (
+                                    <Form.Check 
+                                        key={esp.id}
+                                        type="checkbox"
+                                        id={`esp-${esp.id}`}
+                                        label={esp.detalleEspecialidad}
+                                        checked={filtros.especialidadesIds?.includes(esp.id)}
+                                        onChange={() => handleToggleEspecialidad(esp.id)}
+                                        className="mb-2"
+                                        style={{ fontSize: '0.9rem' }}
+                                    />
+                                ))}
+                            </Dropdown.Menu>
+                        </Dropdown>
                         <Form.Select
                             name="rating"
                             value={filtros.rating}
