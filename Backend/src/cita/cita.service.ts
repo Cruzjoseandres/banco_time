@@ -431,6 +431,8 @@ export class CitaService {
   }
 
   async getReportesSociales() {
+    const filterDate = new Date('2026-05-15T00:00:00');
+
     const totalUsuarios = await this.userRepository.count();
 
     const allUsers = await this.userRepository.find({
@@ -441,12 +443,18 @@ export class CitaService {
     const totalTutors = usersComunes.filter(u => u.materias.length > 0 || u.especialidades.length > 0).length;
     const totalEstudiantes = usersComunes.length - totalTutors;
 
-    const totalCitas = await this.citaRepository.count();
+    // Filtrar citas desde mediados de mayo en adelante
+    const totalCitas = await this.citaRepository.createQueryBuilder('cita')
+      .where('cita.fechaHoraInicio >= :filterDate', { filterDate })
+      .getCount();
 
-    const citasFinalizadas = await this.citaRepository.find({
-      where: { estado: 'finalizada' },
-      relations: ['estudiante', 'tutor', 'materia'],
-    });
+    const citasFinalizadas = await this.citaRepository.createQueryBuilder('cita')
+      .leftJoinAndSelect('cita.estudiante', 'estudiante')
+      .leftJoinAndSelect('cita.tutor', 'tutor')
+      .leftJoinAndSelect('cita.materia', 'materia')
+      .where('cita.estado = :estado', { estado: 'finalizada' })
+      .andWhere('cita.fechaHoraInicio >= :filterDate', { filterDate })
+      .getMany();
 
     let totalHorasIntercambiadas = 0;
     citasFinalizadas.forEach(cita => {
@@ -475,6 +483,7 @@ export class CitaService {
       .createQueryBuilder('cita')
       .select('cita.estado', 'estado')
       .addSelect('COUNT(cita.id)', 'count')
+      .where('cita.fechaHoraInicio >= :filterDate', { filterDate })
       .groupBy('cita.estado')
       .getRawMany();
 
@@ -501,19 +510,24 @@ export class CitaService {
       .sort((a, b) => b.count - a.count)
       .slice(0, 6);
 
+    // Generar meses a mostrar en la evolución temporal (desde mayo de 2026 en adelante)
     const mesesNombres = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
     const ultimosMeses: { mesStr: string, count: number, horas: number, year: number, monthIdx: number }[] = [];
 
     const now = new Date();
-    for (let i = 5; i >= 0; i--) {
-      const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+    const startYear = 2026;
+    const startMonth = 4; // Mayo (0-indexed)
+
+    let current = new Date(startYear, startMonth, 1);
+    while (current <= now) {
       ultimosMeses.push({
-        mesStr: `${mesesNombres[d.getMonth()]} ${d.getFullYear().toString().substring(2)}`,
+        mesStr: `${mesesNombres[current.getMonth()]} ${current.getFullYear().toString().substring(2)}`,
         count: 0,
         horas: 0,
-        year: d.getFullYear(),
-        monthIdx: d.getMonth(),
+        year: current.getFullYear(),
+        monthIdx: current.getMonth(),
       });
+      current.setMonth(current.getMonth() + 1);
     }
 
     citasFinalizadas.forEach(cita => {
