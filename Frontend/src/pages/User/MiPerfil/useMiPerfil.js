@@ -198,6 +198,8 @@ export const useMiPerfil = () => {
     // Utilidades de visualización
     const getTipoIcon = (tipo) => {
         const map = {
+            debito: '💸',
+            credito: '💰',
             cobro: '💸', pago: '💰', reembolso: '↩️',
             bonificacion: '🎁', penalizacion: '⚠️',
         };
@@ -205,8 +207,8 @@ export const useMiPerfil = () => {
     };
 
     const getTipoColor = (tipo) => {
-        if (['pago', 'reembolso', 'bonificacion'].includes(tipo)) return '#10b981';
-        if (['cobro', 'penalizacion'].includes(tipo)) return '#ef4444';
+        if (['credito', 'pago', 'reembolso', 'bonificacion'].includes(tipo)) return '#10b981';
+        if (['debito', 'cobro', 'penalizacion'].includes(tipo)) return '#ef4444';
         return '#6b7280';
     };
 

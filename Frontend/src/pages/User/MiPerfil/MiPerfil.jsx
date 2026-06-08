@@ -346,14 +346,14 @@ const MiPerfil = () => {
                                 <div key={i} className="transaccion-item">
                                     <div className="transaccion-icon">{getTipoIcon(t.tipo)}</div>
                                     <div className="transaccion-info">
-                                        <div className="transaccion-descripcion">{t.descripcion}</div>
+                                        <div className="transaccion-descripcion">{t.motivo || t.descripcion}</div>
                                         <div className="transaccion-fecha">{formatFecha(t.fecha)}</div>
                                     </div>
                                     <div
                                         className="transaccion-monto"
                                         style={{ color: getTipoColor(t.tipo) }}
                                     >
-                                        {t.cantidad > 0 ? '+' : ''}{t.cantidad}h
+                                        {t.tipo === 'credito' ? '+' : '-'}{t.monto || t.cantidad}h
                                     </div>
                                 </div>
                             ))
